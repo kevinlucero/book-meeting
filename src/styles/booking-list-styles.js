@@ -26,10 +26,21 @@ export const styles = makeStyles({
     bookStartAndEnd: {
       fontSize: 12,
     },
-    addIcon: {
+    topActions: {
         position: 'absolute',
         top: '70px',
-        right: '20px'
+        right: '20px',
+        display: 'flex',
+        alignItems: 'flex-start'
+    },
+
+    selectField: {
+        marginTop: '6px',
+        marginRight: '10px'
+    },
+    txtField: {
+        marginRight: '10px',
+        marginTop: '-10px'
     },
     launchIcon: {
         position: 'absolute',

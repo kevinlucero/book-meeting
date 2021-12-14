@@ -20,10 +20,15 @@ export default function reducer(state, action) {
     case 'delete':
       newState = {...state, list: state.list.filter(x => x.id !== action.payload) }
       break;
+    case 'filter': 
+      newState = {...state, list: action.payload }
+      break;
     default:
       throw new Error();
   }
   
-  setList(newState);
+  if (action.type !== 'filter')
+    setList(newState);
+
   return newState;
 }

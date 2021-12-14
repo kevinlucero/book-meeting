@@ -2,7 +2,7 @@ import React, { useEffect, useState, useReducer } from "react";
 import { Link } from "react-router-dom";
 import moment from 'moment';
 
-import { Card, CardActions, CardContent, Button, Typography, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@material-ui/core';
+import { Card, CardActions, CardContent, Button, Typography, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Select} from '@material-ui/core';
 import { Add, Launch } from '@material-ui/icons';
 
 import { getBookedMeetingList } from '../api';
@@ -21,6 +21,7 @@ export default function BookingList() {
     const [selectedMeeting, setSelectedMeeting] = useState({});
     const [selectedGuestNames, setSelectedGuestNames] = useState([]);
     const [transaction, setTransaction] = useState(null);
+    const [searchQuery, setSearchQuery] = useState("");
     const classes = styles();
 
     useEffect(() =>{
@@ -79,6 +80,53 @@ export default function BookingList() {
         handleCloseModal();
     }
 
+    const handleFilter = (params) => {
+        const val = params.target.value;
+        const types = {
+            hostName: 'hostName',
+            roomName: 'roomName',
+            guestsName: 'guestsName',
+            bookTime: 'bookTime',
+        };
+        const sortProperty = types[val];
+        let newList = [];
+        switch (val) {
+            case types.hostName:
+            case types.roomName:
+                newList = data.list.sort((a, b) => a[sortProperty].localeCompare(b[sortProperty]))
+                break;
+            case types.guestsName:
+                newList = data.list.sort((a, b) => a[types['hostName']].localeCompare(b[types['hostName']]))
+                break;
+            case types.bookTime:
+                newList = data.list.sort((a ,b ) => new Date(a.bookStartTime) - new Date(b.bookStartTime));
+                break;
+            default:
+                newList = data.list;
+                break;
+        }
+        dispatch({type: 'filter', payload: newList});
+    }
+
+    const handleSearchFilter = (event) => {
+        const val = event.target.value;
+        
+        if (val.length >= 3){
+            const newList = data.list
+                .filter(x => 
+                    x.hostName.toLowerCase().includes(val.toLowerCase()) ||
+                    x.roomName.toLowerCase().includes(val.toLowerCase())
+                );
+            dispatch({type: 'filter', payload: newList});
+            
+        } else {
+            const local = getList();
+            dispatch({type: 'filter', payload: local.list});
+        }
+        
+        setSearchQuery(val);
+    }
+
     return (
         <div className={classes.container}>
             {
@@ -118,15 +166,31 @@ export default function BookingList() {
                 )
             }
 
-        <Button
-            variant="contained"
-            color="secondary"
-            startIcon={<Add />}
-            className={classes.addIcon}
-            onClick={() => {handleOpenAddModal()}}
-        >
-            Book Meeting
-        </Button>
+            <div className={classes.topActions}>
+                <Select
+                    native
+                    onChange={(event)=>{ handleFilter(event)}}
+                    inputProps={{name: 'age', id: 'age-native-simple'}}
+                    className={classes.selectField}
+                    >
+                    <option aria-label="None" value=""></option>
+                    <option aria-label="None" value="hostName">Host Name</option>
+                    <option aria-label="None" value="roomName">Room Name</option>
+                    <option aria-label="None" value="guestsName">Guest Name</option>
+                    <option aria-label="None" value="bookTime">Book Time</option>
+                </Select>
+                <TextField className={classes.txtField} value={searchQuery} label="Search" size='medium' onChange={(event)=>{handleSearchFilter(event, 'searchText')}}/>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<Add />}
+                    onClick={() => {handleOpenAddModal()}}
+                >
+                    Book Meeting
+                </Button>
+            </div>
+
+
 
             {
                 open &&
