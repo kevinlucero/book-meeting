@@ -1,0 +1,68 @@
+[
+    {
+        "id": 1,
+        "roomName": "Alpha Room",
+        "hostName": "Jose Rizal",
+        "guestsName": [
+            "pedro", "Juan", "Apostol"
+        ],
+        "createdDate": "Mon Dec 13 2021 20:49:18 GMT+0800",
+        "bookStartTime": "Mon Dec 13 2021 20:49:18 GMT+0800",
+        "bookEndTime" : "Mon Dec 13 2021 21:49:18 GMT+0800"
+    },
+    {
+        "id": 2,
+        "roomName": "Bravo Room",
+        "hostName": "Jose Rizal",
+        "guestsName": [
+            "pedro", "Juan", "Apostol"
+        ],
+        "createdDate": "Mon Dec 13 2021 20:49:18 GMT+0800",
+        "bookStartTime": "Mon Dec 13 2021 20:49:18 GMT+0800",
+        "bookEndTime" : "Mon Dec 13 2021 21:49:18 GMT+0800"
+    },
+    {
+        "id": 3,
+        "roomName": "Charlie Room",
+        "hostName": "Jose Rizal",
+        "guestsName": [
+            "pedro", "Juan", "Apostol"
+        ],
+        "createdDate": "Mon Dec 13 2021 20:49:18 GMT+0800",
+        "bookStartTime": "Mon Dec 13 2021 20:49:18 GMT+0800",
+        "bookEndTime" : "Mon Dec 13 2021 21:49:18 GMT+0800"
+    },
+    {
+        "id": 4,
+        "roomName": "Delta Room",
+        "hostName": "Jose Rizal",
+        "guestsName": [
+            "pedro", "Juan", "Apostol"
+        ],
+        "createdDate": "Mon Dec 13 2021 20:49:18 GMT+0800",
+        "bookStartTime": "Mon Dec 13 2021 20:49:18 GMT+0800",
+        "bookEndTime" : "Mon Dec 13 2021 21:49:18 GMT+0800"
+    },
+    {
+        "id": 5,
+        "roomName": "Echo Room",
+        "hostName": "Jose Rizal",
+        "guestsName": [
+            "pedro", "Juan", "Apostol"
+        ],
+        "createdDate": "Mon Dec 13 2021 20:49:18 GMT+0800",
+        "bookStartTime": "Mon Dec 13 2021 20:49:18 GMT+0800",
+        "bookEndTime" : "Mon Dec 13 2021 21:49:18 GMT+0800"
+    },
+    {
+        "id": 6,
+        "roomName": "Foxtrot Room",
+        "hostName": "Jose Rizal",
+        "guestsName": [
+            "pedro", "Juan", "Apostol"
+        ],
+        "createdDate": "Mon Dec 13 2021 20:49:18 GMT+0800",
+        "bookStartTime": "Mon Dec 13 2021 20:49:18 GMT+0800",
+        "bookEndTime" : "Mon Dec 13 2021 21:49:18 GMT+0800"
+    }
+]
