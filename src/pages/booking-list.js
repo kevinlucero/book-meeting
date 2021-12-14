@@ -110,20 +110,16 @@ export default function BookingList() {
 
     const handleSearchFilter = (event) => {
         const val = event.target.value;
-        
+        let list = getList().list;
         if (val.length >= 3){
-            const newList = data.list
+            list = data.list
                 .filter(x => 
                     x.hostName.toLowerCase().includes(val.toLowerCase()) ||
                     x.roomName.toLowerCase().includes(val.toLowerCase())
                 );
-            dispatch({type: 'filter', payload: newList});
-            
-        } else {
-            const local = getList();
-            dispatch({type: 'filter', payload: local.list});
-        }
-        
+        } 
+
+        dispatch({type: 'filter', payload: list});
         setSearchQuery(val);
     }
 

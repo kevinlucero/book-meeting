@@ -15,7 +15,7 @@ export const styles = makeStyles({
         textTransform: 'capitalize',
     },
     root: {
-      minWidth: 275,
+      width: '300px',
       margin: '15px',
       backgroundColor: '#f1eded',
       position: 'relative'

@@ -2,12 +2,11 @@ import React, { useRef, useState} from 'react';
 import moment from 'moment';
 
 import { Modal, TextField, Button, Select} from '@material-ui/core';
-
 import { AddCircleRounded, CancelRounded } from '@material-ui/icons';
 
 import { styles } from '../styles/add-edit-modal-styles';
-
 import { Rooms } from '../utils/rooms';
+import { getList } from '../utils/localStorage';
 
 export default function AddEditModal(props){
     const classes = styles();
@@ -17,10 +16,10 @@ export default function AddEditModal(props){
 
     const [meeting, setMeeting] = useState(selectedMeeting || {});
     const [guestNames, setGuestNames] = useState(selectedGuestNames || []);
-    const [startDate, setStartDate] = useState(selectedMeeting.bookStartTime || moment(new Date()).format('YYYY-MM-DD'));
-    const [startTime, setStartTime] = useState(moment(selectedMeeting.bookStartTime).format('HH:mm') || moment(startDate).format('HH:mm'));
-    const [endDate, setEndDate] = useState(selectedMeeting.bookEndTime || moment(new Date()).format('YYYY-MM-DD'));
-    const [endTime, setEndTime] = useState(moment(selectedMeeting.bookEndTime).format('HH:mm') || moment().format('HH:mm'));
+    const [startDate, setStartDate] = useState(moment(new Date(selectedMeeting.bookStartTime)).format('YYYY-MM-DD') || moment().format('YYYY-MM-DD'));
+    const [startTime, setStartTime] = useState(moment(new Date(selectedMeeting.bookStartTime)).format('HH:mm') || moment().format('HH:mm'));
+    const [endDate, setEndDate] = useState(moment(new Date(selectedMeeting.bookEndTime)).format('YYYY-MM-DD') || moment().format('YYYY-MM-DD'));
+    const [endTime, setEndTime] = useState(moment(new Date(selectedMeeting.bookEndTime)).format('HH:mm') || moment().format('HH:mm'));
 
     const handleAddGuestName = () => {
         if (inputGuestName.current.value && inputGuestName.current.value.length > 3){
@@ -46,13 +45,13 @@ export default function AddEditModal(props){
                 setStartDate(moment(event.target.valueAsDate).format('YYYY-MM-DD'));
                 break;
             case 'fromTime':
-                setStartTime(moment(event.target.valueAsDate).utc().format('HH:mm'));
+                setStartTime(moment(event.target.valueAsDate).format('HH:mm'));
                 break;
             case 'toDate':
                 setEndDate(moment(event.target.valueAsDate).format('YYYY-MM-DD'));
                 break;
             case 'toTime':
-                setEndTime(moment(event.target.valueAsDate).utc().format('HH:mm'));
+                setEndTime(moment(event.target.valueAsDate).format('HH:mm'));
                 break;
             default:
                 break;
@@ -64,14 +63,30 @@ export default function AddEditModal(props){
     }
     
     const handleModalChanges = (meeting, guestNames, startDate, startTime, endDate, endTime, transaction) => {
+        const custmonStartDate = moment(moment(startDate).format('MM-DD-YYYY') + " " +startTime).toString();
+        const custmonEndtDate = moment(moment(endDate).format('MM-DD-YYYY') + " " + endTime).toString(); 
         const newValue = {
             ...meeting, 
             guestsName: guestNames, 
-            bookStartTime: moment(moment(startDate).format('MM-DD-YYYY') + " " +startTime).toString(),
-            bookEndTime: moment(moment(endDate).format('MM-DD-YYYY') + " " + endTime).toString(),
+            bookStartTime: custmonStartDate,
+            bookEndTime: custmonEndtDate,
         }
-        handleSaveChanges(newValue, transaction);
-        
+        const isInvalidate = validateDate(custmonStartDate, custmonEndtDate);
+        if (isInvalidate){
+            alert('Time you choose is already booked')
+        } else {
+            handleSaveChanges(newValue, transaction)
+        }
+    }
+
+    const validateDate = (start, end) => {
+        const origList = getList().list;
+        return origList.some(m => {
+            if ((start > m.bookStartTime && start < m.bookEndTime) && (end > m.bookStartTime && end < m.bookEndTime)){
+                return true;
+            }
+            else return false;
+        })
     }
 
     return (
@@ -128,7 +143,7 @@ export default function AddEditModal(props){
                                 id="from-date"
                                 label="From"
                                 type="date"
-                                value={moment(startDate).format('YYYY-MM-DD')}
+                                value={startDate}
                                 onChange = {(event) => { handleOnChange(event, 'fromDate') }}
                                 className={classes.datePicker}
                                 InputLabelProps={{
@@ -154,7 +169,7 @@ export default function AddEditModal(props){
                                 id="to-date"
                                 label="To"
                                 type="date"
-                                value={moment(endDate).format('YYYY-MM-DD')}
+                                value={endDate}
                                 onChange = {(event) => { handleOnChange(event, 'toDate') }}
                                 className={classes.datePicker}
                                 InputLabelProps={{
