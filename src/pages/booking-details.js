@@ -13,7 +13,7 @@ export default function BookingDetails(props) {
     const rndompix = Math.floor(Math.random() * 3);
     return (
         
-        <Paper elevation={3} className={classes.container}>
+        <Paper elevation={3} className={classes.container} id="booking-details-page">
             {
                 meeting &&
                 <div className={classes.detailsCon}>

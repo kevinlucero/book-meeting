@@ -129,7 +129,7 @@ export default function BookingList() {
                             <Typography className={classes.roomName} variant="h5" component="h2">
                                 {query.roomName}
                                 <Link to={`/booking-details/${query.id}`}>
-                                    <Launch className={classes.launchIcon} />
+                                    <Launch id={`launch-icon-button-${query.id}`}className={classes.launchIcon}  />
                                 </Link>
                                 
                             </Typography>
@@ -150,8 +150,8 @@ export default function BookingList() {
                         </CardContent>
 
                         <CardActions className={classes.action}>
-                            <Button color='primary' size="small" onClick={() => handleOpenEditModal(query)}>Edit</Button>
-                            <Button color='secondary' size="small" onClick={() => handleOpenDialog(query)}>Delete</Button>
+                            <Button color='primary' size="small" id={`edit-button-${query.id}`} onClick={() => handleOpenEditModal(query)}>Edit</Button>
+                            <Button color='secondary' size="small" id={`delete-button-${query.id}`} onClick={() => handleOpenDialog(query)}>Delete</Button>
                         </CardActions>
                     </Card>
                     )
@@ -203,7 +203,7 @@ export default function BookingList() {
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
-                    <DialogTitle>
+                    <DialogTitle id="dialog-room-title">
                         {"Delete Room"}
                     </DialogTitle>
                     <DialogContent>

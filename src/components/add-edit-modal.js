@@ -98,7 +98,7 @@ export default function AddEditModal(props){
         >
         <div className={classes.modal}>
             <div className={classes.subcont}>
-                <h2 className={classes.modalh2}>{`${transaction === 'EDIT' ? 'Edit' : 'Add'} Room Details`}</h2>
+                <h2 className={classes.modalh2} id="add-edit-modal-header">{`${transaction === 'EDIT' ? 'Edit' : 'Add'} Room Details`}</h2>
                 <form className={classes.form} noValidate autoComplete="off">
                     <Select
                         native
