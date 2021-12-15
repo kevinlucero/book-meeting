@@ -85,7 +85,6 @@ export default function BookingList() {
         const types = {
             hostName: 'hostName',
             roomName: 'roomName',
-            guestsName: 'guestsName',
             bookTime: 'bookTime',
         };
         const sortProperty = types[val];
@@ -94,9 +93,6 @@ export default function BookingList() {
             case types.hostName:
             case types.roomName:
                 newList = data.list.sort((a, b) => a[sortProperty].localeCompare(b[sortProperty]))
-                break;
-            case types.guestsName:
-                newList = data.list.sort((a, b) => a[types['hostName']].localeCompare(b[types['hostName']]))
                 break;
             case types.bookTime:
                 newList = data.list.sort((a ,b ) => new Date(a.bookStartTime) - new Date(b.bookStartTime));
@@ -172,7 +168,6 @@ export default function BookingList() {
                     <option aria-label="None" value=""></option>
                     <option aria-label="None" value="hostName">Host Name</option>
                     <option aria-label="None" value="roomName">Room Name</option>
-                    <option aria-label="None" value="guestsName">Guest Name</option>
                     <option aria-label="None" value="bookTime">Book Time</option>
                 </Select>
                 <TextField className={classes.txtField} value={searchQuery} label="Search" size='medium' onChange={(event)=>{handleSearchFilter(event, 'searchText')}}/>
